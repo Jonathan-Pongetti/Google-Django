@@ -42,7 +42,7 @@ def setupHook(request):
     eventcollect = {
         'id': str(uuid.uuid1()),
         'type': "web_hook",
-        'address': "https://73a8-2605-a601-a80f-3400-1ec-8147-4597-60ac.ngrok.io/api/pushnotification/"
+        'address': "{address}/api/pushnotification/"
     }
     response = service.events().watch(calendarId='primary', body=eventcollect).execute()
     print(response)
@@ -159,7 +159,7 @@ def timeSpent(request):
 @csrf_exempt
 def mostMeetings(request):
     event_list = EventItem.objects.all().values('Creator').annotate(total=Count('Creator')).order_by('-total')
-    if event_list[0]["Creator"] == 'jppongetti@gmail.com':
+    if event_list[0]["Creator"] == '':
         return JsonResponse(event_list[1], safe=False)
     else:
         return JsonResponse(event_list[0], safe=False)
